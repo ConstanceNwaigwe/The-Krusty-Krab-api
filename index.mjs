@@ -10,13 +10,15 @@ const link = process.env.DBLINK || ""
 
 App.use(express.json())
 
+App.use((err, req, res)=>{
+    console.error(err)
+    res.status(500).send('Looks like Plankton is trying to get to our server again. Give us a moment to catch him.')
+})
+
 App.get('/', (req,res)=>{
     res.send("Welcome to the Krusty Krab API")
 })
 
-App.use((err, req, res, next)=>{
-    res.status(500).send('Looks like plantain is trying to get to our server again. Give us a moment to catch him.')
-})
 
 App.listen(PORT, () =>{
     console.log(`Krusty Krab api is running on port: ${PORT}`)
