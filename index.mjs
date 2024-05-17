@@ -5,7 +5,8 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 const App = express();
-const PORT = 2024;
+const PORT = process.env.PORT || 2024;
+const link = process.env.DBLINK || ""
 
 App.use(express.json())
 
