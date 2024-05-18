@@ -22,7 +22,16 @@ router.route("/").get(async(req,res)=>{
     }
 })
 
-router.route("/:id").put(async(req,res)=>{
+router.route("/:id").get(async(req,res)=>{
+    try{
+        const getStaff = await Staff.findById(req.params.id)
+        res.json(getStaff)
+    }catch(err){
+        console.error(err)
+        res.status(500).send('Plankton is trying to access our Server. Unable to get staff data by id.')
+    }
+    
+}).put(async(req,res)=>{
     try{
         const putStaff = await Staff.findByIdAndUpdate(req.params.id, req.body, {new: true})
         res.json(putStaff)
@@ -39,4 +48,6 @@ router.route("/:id").put(async(req,res)=>{
         res.status(500).send('Plankton is trying to access our Server. Unable to delete staff data.')
     }
 })
+
+export default router;
 

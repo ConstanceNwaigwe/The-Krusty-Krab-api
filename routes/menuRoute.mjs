@@ -22,7 +22,16 @@ router.route("/").get(async(req,res)=>{
     }
 })
 
-router.route("/:id").put(async(req,res)=>{
+router.route("/:id").get(async(req,res)=>{
+    try{
+        const getMenu = await Menu.findById(req.params.id)
+        res.json(getMenu)
+    }catch(err){
+        console.error(err)
+        res.status(500).send('Plankton is trying to access our Server. Unable to get menu data by id.')
+    }
+    
+}).put(async(req,res)=>{
     try{
         const putMenu = await Menu.findByIdAndUpdate(req.params.id, req.body, {new: true})
         res.json(putMenu)
@@ -40,3 +49,4 @@ router.route("/:id").put(async(req,res)=>{
     }
 })
 
+export default router;

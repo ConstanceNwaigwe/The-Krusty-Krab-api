@@ -2,18 +2,21 @@
 import express from 'express';
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
+// Import routes
+import Menu from './routes/menuRoute.mjs'
+import Staff from './routes/staffRoute.mjs'
 
 dotenv.config();
 const App = express();
 const PORT = process.env.PORT || 2024;
 const link = process.env.DBLINK || ""
+await mongoose.connect(link);
 
 App.use(express.json())
 
-App.use((err, req, res)=>{
-    console.error(err)
-    res.status(500).send('Looks like Plankton is trying to get to our server again. Give us a moment to catch him.')
-})
+
+App.use('/menu', Menu)
+App.use('/staff', Staff)
 
 App.get('/', (req,res)=>{
     res.send("Welcome to the Krusty Krab API")
