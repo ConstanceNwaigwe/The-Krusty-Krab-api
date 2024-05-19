@@ -20,6 +20,10 @@ const staffSchema = new mongoose.Schema({
     type: String,
     required: false,
   },
+  likes: {
+    type: Array,
+    required: false,
+  }
 });
 
 export default mongoose.model('Staff', staffSchema);

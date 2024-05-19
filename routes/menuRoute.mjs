@@ -33,7 +33,7 @@ router.route("/").get(async(req,res)=>{
 router.route("/:id").get(async(req,res)=>{
     try{
         const getMenu = await Menu.findById(req.params.id)
-        if(!getMenu){
+        if(!getMenu || req.params.id.length < 24){
             res.send(`${req.params.id} doesn't exist in this database Plankton. Try Again`)
         } else{
             res.json(getMenu)
@@ -45,15 +45,20 @@ router.route("/:id").get(async(req,res)=>{
     
 }).put(async(req,res)=>{
     try{
-        if(!req.body.name.trim() || !req.body.ingredients.trim()){
-            res.send("Plankton put the name and/or ingredients back. Come on. Don't make me call Mr.Krabs on you.")
-        }
-        else if(req.body.name.trim().toLowerCase().includes("chum") || req.body.ingredients.trim().toLowerCase().includes("chum")){
-            res.send("Plankton come on, you don't even like chum nor do we.")
-        }
-        else{
-            const putMenu = await Menu.findByIdAndUpdate(req.params.id, req.body, {new: true})
-            res.json(putMenu)
+        const getMenu = await Menu.findById(req.params.id)
+        if(!getMenu){
+            res.send(`Not you tryna change something that doesn't exist. Try again Plankton`)
+        } else{
+            if(!req.body.name.trim() || !req.body.ingredients.trim()){
+                res.send("Plankton put the name and/or ingredients back. Come on. Don't make me call Mr.Krabs on you.")
+            }
+            else if(req.body.name.trim().toLowerCase().includes("chum") || req.body.ingredients.trim().toLowerCase().includes("chum")){
+                res.send("Plankton come on, you don't even like chum nor do we.")
+            }
+            else{
+                const putMenu = await Menu.findByIdAndUpdate(req.params.id, req.body, {new: true})
+                res.json(putMenu)
+            }
         }
     }catch(err){
         console.error(err)

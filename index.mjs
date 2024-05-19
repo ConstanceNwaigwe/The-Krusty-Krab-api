@@ -22,6 +22,10 @@ App.get('/', (req,res)=>{
     res.send("Welcome to the Krusty Krab API")
 })
 
+App.get('*', (req,res)=>{
+    res.send("Plankton is that you? You can't get the secret fomula by accessing routes that don't exist.")
+})
+
 
 App.listen(PORT, () =>{
     console.log(`Krusty Krab api is running on port: ${PORT}`)

@@ -45,15 +45,20 @@ router.route("/:id").get(async(req,res)=>{
     
 }).put(async(req,res)=>{
     try{
-        if(!req.body.name.trim() || !req.body.jobTitle.trim()){
-            res.send("Plankton put the name and/or jobTitle back. Come on. Don't make me call Mr.Krabs on you.")
-        }
-        else if(req.body.name.trim().toLowerCase().includes("plankton")){
-            res.send("We warned you plankton. Say bye bye to Karen. She's our wife now.")
-        }
-        else{
-            const putStaff = await Staff.findByIdAndUpdate(req.params.id, req.body, {new: true})
-            res.json(putStaff)
+        const getStaff = await Staff.findById(req.params.id)
+        if(!getStaff){
+            res.send(`Not you tryna change something that doesn't exist. Try again Plankton`)
+        } else{
+            if(!req.body.name.trim() || !req.body.jobTitle.trim()){
+                res.send("Plankton put the name and/or jobTitle back. Come on. Don't make me call Mr.Krabs on you.")
+            }
+            else if(req.body.name.trim().toLowerCase().includes("plankton")){
+                res.send("We warned you plankton. Say bye bye to Karen. She's our wife now.")
+            }
+            else{
+                const putStaff = await Staff.findByIdAndUpdate(req.params.id, req.body, {new: true})
+                res.json(putStaff)
+            }
         }
     }catch(err){
         console.error(err)
