@@ -33,7 +33,7 @@ router.route("/").get(async(req,res)=>{
 router.route("/:id").get(async(req,res)=>{
     try{
         const getMenu = await Menu.findById(req.params.id)
-        if(!getMenu || req.params.id.length < 24){
+        if(!getMenu){
             res.send(`${req.params.id} doesn't exist in this database Plankton. Try Again`)
         } else{
             res.json(getMenu)
