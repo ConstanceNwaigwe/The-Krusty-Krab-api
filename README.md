@@ -19,6 +19,7 @@
 - run npm i
 - run npm run dev
 - View in http://localhost:2024
+- You can also view the deployed api [here](https://the-krusty-krab-api.onrender.com/)
 
 ---
 
